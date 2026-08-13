@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#F3ECDA" />
+<title>HH Goa 2026 — Frame / Builder ID Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="stampWrap"><div class="stamp">OFFICIALLY<br>FRAMED<br>★ HHG 2026 ★</div></div>
+    <div class="eyebrow"><span><span class="dot"></span>HACKER HOUSE GOA</span><span>28–31 OCT · #FrameInGoa</span></div>
+    <h1>Frame Your <span class="hi">Build</span><span class="devnagari">गोवा</span></h1>
+    <p class="sub">Upload your photo — or your whole squad's — and get a branded HH Goa 2026 frame or Builder ID in seconds. No login, no manual cropping.</p>
+    <button class="howto-toggle" id="howtoToggle" type="button">What do these terms mean? ⌄</button>
+  </header>
+
+  <div class="howto-panel" id="howtoPanel" hidden>
+    <h2>Quick explainer</h2>
+    <ul>
+      <li><strong>What you're building:</strong> upload a photo (or a few teammates' photos) and get it instantly composited into a branded HH Goa 2026 frame — with name, stack, and a fun auto-generated "builder class" stamped on it.</li>
+      <li><strong>"No manual cropping":</strong> any photo size or shape auto-fits its slot, like Instagram — no Photoshop needed.</li>
+      <li><strong>"Builder class":</strong> a playful title generated from your name + stack. Tap the 🎲 to reroll it if you want a different one.</li>
+      <li><strong>"1-click share on X":</strong> opens X with the <code>#FrameInGoa</code> caption pre-filled and downloads your image so you can attach it — X links can't auto-attach images from a website, so this is the closest real "1-click."</li>
+    </ul>
+  </div>
+
+  <main class="layout">
+
+    <section class="panel controls" aria-label="Frame settings">
+      <div class="crosshair tl"></div><div class="crosshair tr"></div>
+
+      <div class="cardTitle"><span class="n">1</span> Pick a vibe</div>
+      <div class="swatchRow" id="swatchRow">
+        <button class="swatch active" data-vibe="sunset" type="button"><span class="bar" style="background:linear-gradient(90deg,#FEE101,#FF0080)"></span><span>Sunset</span></button>
+        <button class="swatch" data-vibe="jungle" type="button"><span class="bar" style="background:linear-gradient(90deg,#0F7A46,#FEE101)"></span><span>Jungle</span></button>
+        <button class="swatch" data-vibe="tide" type="button"><span class="bar" style="background:linear-gradient(90deg,#3FA968,#FF0080)"></span><span>Tide</span></button>
+        <button class="swatch" data-vibe="bloom" type="button"><span class="bar" style="background:linear-gradient(90deg,#000000,#FEE101)"></span><span>Bloom</span></button>
+      </div>
+
+      <div class="cardTitle" style="margin-top:20px;"><span class="n">2</span> Your photo(s)</div>
+      <label class="dropzone" for="photoInput">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke-linecap="round"/></svg>
+        <p><b>Tap to upload</b> — you + up to 3 teammates</p>
+        <small>JPG · PNG · WEBP — any crop, any size</small>
+      </label>
+      <input type="file" id="photoInput" accept="image/*" multiple />
+      <div class="thumbs" id="thumbs"></div>
+
+      <div class="cardTitle" style="margin-top:20px;"><span class="n">3</span> Builder details</div>
+      <div class="field">
+        <label for="nameInput">Name / team name</label>
+        <input type="text" id="nameInput" placeholder="e.g. Priya Nair" maxlength="40" />
+      </div>
+      <div class="field">
+        <label for="stackInput">Stack (comma separated)</label>
+        <input type="text" id="stackInput" placeholder="e.g. React, Node, Postgres" maxlength="60" />
+      </div>
+      <div class="field">
+        <label for="builderClassOut">Builder class <span class="autogen">(auto-generated)</span></label>
+        <div class="titleRow">
+          <div class="bc-value" id="builderClassOut">—</div>
+          <button class="diceBtn" id="rerollBtn" type="button" title="Reroll builder class">🎲</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="downloadBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 12l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round"/></svg>
+          Download
+        </button>
+        <button class="btn x" id="shareBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-7.1l-5.5-7.2L4 22H1l8.2-9.4L1 2h7.1l5 6.6L18.9 2Zm-2.5 18h1.9L8.2 4H6.2l10.2 16Z"/></svg>
+          Share to X
+        </button>
+      </div>
+      <p class="hint" id="shareHint"></p>
+    </section>
+
+    <section class="panel preview" aria-label="Frame preview">
+      <div class="crosshair tl"></div><div class="crosshair tr"></div><div class="crosshair bl"></div><div class="crosshair br"></div>
+      <div class="canvas-wrap">
+        <canvas id="frameCanvas" width="1200" height="1200"></canvas>
+        <p class="empty-note" id="emptyNote">Upload a photo to see your frame come alive →</p>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="panel steps-panel">
+    <div class="cardTitle"><span class="n">i</span> How it works</div>
+    <div class="steps">
+      <div class="step"><span class="num">01</span><div class="t">Upload</div><div class="d">Any JPG, PNG or WEBP — yours, or your whole team's.</div></div>
+      <div class="step"><span class="num">02</span><div class="t">Auto-fit</div><div class="d">Every photo crops to fit its slot automatically — no manual work.</div></div>
+      <div class="step"><span class="num">03</span><div class="t">Personalize</div><div class="d">Add your name, stack, and pick a color vibe.</div></div>
+      <div class="step"><span class="num">04</span><div class="t">Ship it</div><div class="d">Download the PNG or post straight to X with #FrameInGoa.</div></div>
+    </div>
+  </div>
+
+  <footer>BUILT FOR HH GOA 2026 · #FRAMEINGOA · RUNS ENTIRELY IN YOUR BROWSER</footer>
+</div>
+
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
